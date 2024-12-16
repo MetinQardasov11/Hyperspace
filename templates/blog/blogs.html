@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Generic - Hyperspace by HTML5 UP</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <noscript><link rel="stylesheet" href="{% static 'assets/css/noscript.css' %}" /></noscript>
+</head>
+
+<body class="is-preload">
+        
+    <header id="header">
+        <a href="{% url 'base:index' %}" class="title">Hyperspace</a>
+        <nav>
+            <ul>
+                <li><a href="{% url 'base:index' %}">Home</a></li>
+                <li><a href="{% url 'blog:blogs' %}" class="active">Blogs</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="wrapper">
+        <section id="main" class="wrapper">
+            <div class="inner">
+                <div class="features">
+
+                    {% for blog in page_obj %}
+                        <a href="{% url 'blog:blog_detail' blog.slug %}">
+                            <section style="width: 100%;">
+                                <h3>{{ blog.title }} </h3>
+                                <p>{{ blog.content|truncatechars:200 }}</p>
+                            </section>
+                        </a>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="pagination" style="display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+        <span class="step-links" style="font-family: Arial, sans-serif; color: white; background-color: #333; padding: 10px 20px; border-radius: 30px; display: flex; gap: 10px; align-items: center;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" class="pagination-link" style="color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background-color 0.3s ease; display: flex; align-items: center;">
+                    <span style="font-size: 16px;">&laquo;</span> 
+                </a>
+                <a href="?page={{ page_obj.previous_page_number }}" class="pagination-link" style="color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background-color 0.3s ease; display: flex; align-items: center;">
+                    <span style="font-size: 16px;">&#8592;</span> 
+                </a>
+            {% endif %}
+        
+            <span class="current" style="color: #bbb; padding: 8px 15px; font-weight: bold; background-color: #444; border-radius: 5px;">
+                {{ page_obj.number }}
+            </span>
+        
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="pagination-link" style="color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background-color 0.3s ease; display: flex; align-items: center;">
+                    <span style="font-size: 16px;">&#8594;</span> 
+                </a>
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="pagination-link" style="color: #fff; text-decoration: none; padding: 8px 15px; border-radius: 5px; transition: background-color 0.3s ease; display: flex; align-items: center;">
+                    <span style="font-size: 16px;">&raquo;</span>
+                </a>
+            {% endif %}
+        </span>
+    </div>
+
+    <footer id="footer" class="wrapper alt">
+        <div class="inner">
+            <ul class="menu">
+                <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            </ul>
+        </div>
+    </footer>
+
+    <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.scrollex.min.js' %}"></script>
+    <script src="{% static 'assets/js/jquery.scrolly.min.js' %}"></script>
+    <script src="{% static 'assets/js/browser.min.js' %}"></script>
+    <script src="{% static 'assets/js/breakpoints.min.js' %}"></script>
+    <script src="{% static 'assets/js/util.js' %}"></script>
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+    <script>
+        document.querySelectorAll('.pagination-link').forEach(function (link) {
+            link.addEventListener('mouseover', function() {
+                link.style.backgroundColor = '#444';
+            });
+            link.addEventListener('mouseout', function() {
+                link.style.backgroundColor = '';
+            });
+        });
+    </script>
+
+</body>
+</html>
